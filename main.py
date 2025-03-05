@@ -130,6 +130,8 @@ class Home(Screen):
         json.dump(DATA, open(DATA_LOCATION, 'w'))
         TIME_LIMIT[0], TIME_LIMIT[1] = [(DATA['set_hour'], DATA['set_min']-15), (DATA['set_hour'], DATA['set_min']+15)]
         timeCalc(DATA['set_hour'], DATA['set_min'])
+        global isTimeSet
+        isTimeSet = True
         self.ids['Hours'].text, self.ids['Minutes'].text = ['', '']
 
 class Main(Screen):

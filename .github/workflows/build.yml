@@ -1,25 +1,20 @@
-name: Build APK
-    on:
-      push:
-        branches: [ main ]
-    jobs:
-      build-android:
-        name: Build for Android
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout
-            uses: actions/checkout@v2
-          - name: Build with Buildozer
-            run: |
-              sudo apt update
-              sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
-              buildozer android debug
-              pip install --user --upgrade Cython virtualenv
-              pip install --user --upgrade buildozer
-              export PATH=$PATH:~/.local/bin/
-              buildozer -v android debug
-          - name: Upload artifacts
-            uses: actions/upload-artifact@v2
-            with:
-              name: package
-              path: bin/*.apk
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build APK
+        uses: digreatbrian/buildozer-action@v2
+        with:
+          python-version: 3.8
+          buildozer-cmd: buildozer -v android debug
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: package
+          path: ./bin/*.apk

@@ -1,0 +1,93 @@
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+
+<TextInput>
+    halign: 'center'
+    valign: 'center'
+    input_filter: 'int'
+    multiline: False
+    font_size: '20sp'
+    size_hint: (0.6, 0.075)
+    background_color: '#00000000'
+    foreground_color: '#a43145FF'
+
+<Manager>
+    Home:
+        name: 'home'
+    Main:
+        name: 'main'
+
+
+<Home>
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+
+        Rectangle:
+            source: root.background_home
+            size: root.width, root.height
+
+    FloatLayout:
+        size: root.width, root.height
+
+        TextInput:
+            id: Hours
+            pos_hint: {'x': 0.2, 'y': 0.4}
+            hint_text: root.set_hour
+            on_text:
+                root.setTimeOutOfBound(1)
+                root.checkSetTime()
+
+        TextInput:
+            id: Minutes
+            pos_hint: {'x': 0.2, 'y': 0.3}
+            hint_text: root.set_min
+            on_text:
+                root.setTimeOutOfBound(2)
+                root.checkSetTime()
+        Button:
+            background_color: 0, 0, 0, 0
+            size_hint: (0.6, 0.25)
+            pos_hint: {'x': 0.2, 'y': 0.55}
+            disabled: root.eye_btn_disabled
+            on_press: 
+                root.setTimeInJSON()
+                root.manager.transition = FadeTransition(duration = 3)
+                root.manager.current = 'main'
+
+
+<Main>
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+
+        Rectangle:
+            source: root.background_main
+            size: root.width, root.height
+
+    FloatLayout:
+        size: root.width, root.height
+
+        Button:
+            background_color: 0, 0, 0, 0
+            size_hint: (0.34, 0.4)
+            pos_hint: {'x': 0.32, 'y': 0.4}
+            on_press: root.Streak()
+            disabled: root.time_btn_disabled
+            Image:
+                size: root.width, root.height
+                color: (1, 1, 1, root.time_btn_transparent)
+                source: 'assets/img/potion.png'
+                center_x: self.parent.center_x + 6
+
+        Button:
+            background_color: 0, 0, 0, 0
+            size_hint: (0.3, 0.2)
+            pos_hint: {'x': 0, 'y': 0.8}
+            on_press:
+                root.manager.transition = SlideTransition(direction = 'right')
+                root.manager.current = 'home'
+            Image:
+                size: root.width, root.height
+                color: (1, 1, 1, 1)
+                source: 'assets/img/back.png' 

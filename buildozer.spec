@@ -49,10 +49,10 @@ requirements = python3,kivy,jnius,plyer,pillow
 # requirements.source.kivy = ../../kivy
 
 # (str) Presplash of the application
-presplash.filename = 'assets/img/presplash.png'
+presplash.filename = %(source.dir)s/assets/img/presplash.png
 
 # (str) Icon of the application
-icon.filename = 'assets/img/icon/icon.png'
+icon.filename = %(source.dir)s/assets/img/icon/icon.png
 
 # (list) Supported orientations
 # Valid options are: landscape, portrait, portrait-reverse or landscape-reverse
@@ -89,7 +89,7 @@ fullscreen = 0
 # red, blue, green, black, white, gray, cyan, magenta, yellow, lightgray,
 # darkgray, grey, lightgrey, darkgrey, aqua, fuchsia, lime, maroon, navy,
 # olive, purple, silver, teal.
-android.presplash_color = '#181818'
+android.presplash_color = #181818
 
 # (string) Presplash animation using Lottie format.
 # see https://lottiefiles.com/ for examples and https://airbnb.design/lottie/

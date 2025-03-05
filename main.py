@@ -72,7 +72,7 @@ class Condition():
         DATA.update({'last_time_msg_sent': int(time())})
         json.dump(DATA, open(DATA_LOCATION, 'w'))
         from plyer import notification
-        notification.notify(title = f'{TITLE}', message = f'📅It\'s {DATA['streak_month']} month and {DATA['streak_day']} day📅\n🤍Come here and Check-in🤍', app_icon = ICON_MSG)
+        notification.notify(title = f'{TITLE}', message = f'📅It\'s {DATA["streak_month"]} month and {DATA["streak_day"]} day📅\n🤍Come here and Check-in🤍', app_icon = ICON_MSG)
     def dayStreak(self):
         if DATA['streak_day'] == 28: 
             DATA.update({'streak_day': DATA['streak_day'] - 28, 'streak_month': DATA['streak_month'] + 1})
@@ -102,10 +102,10 @@ class Home(Screen):
         self.setHintText()
     def setHintText(self):
         if DATA['set_hour'] == None: self.set_hour = 'Hours ---> 0 - 23'
-        else: self.set_hour = f'Now set at hour : {DATA['set_hour']}'
+        else: self.set_hour = f'Now set at hour : {DATA["set_hour"]}'
             
         if DATA['set_min'] == None: self.set_min = 'Minutes ---> 0 - 59'
-        else: self.set_min = f'Now set at minute : {DATA['set_min']}'
+        else: self.set_min = f'Now set at minute : {DATA["set_min"]}'
     def checkSetTime(self):
         if ((self.ids['Hours'].text != '') and (self.ids['Minutes'].text != '')):
             self.background_home = BG_HOME_READY

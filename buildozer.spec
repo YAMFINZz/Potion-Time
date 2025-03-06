@@ -42,7 +42,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,pyjnius==1.6.1,plyer==2.1.0,pillow,sdl2_ttf==2.0.15
+requirements = python3,kivy,pyjnius==1.6.1,plyer==2.1.0,pillow,sdl2_ttf
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -109,7 +109,7 @@ android.permissions = android.permission.ACCESS_BACKGROUND_LOCATION, android.per
 #android.features = android.hardware.usb.host
 
 # (int) Target Android API, should be as high as possible.
-android.api = 35
+android.api = 34
 
 # (int) Minimum API your APK / AAB will support.
 #android.minapi = 28

@@ -112,16 +112,16 @@ android.permissions = android.permission.ACCESS_BACKGROUND_LOCATION, android.per
 android.api = 35
 
 # (int) Minimum API your APK / AAB will support.
-android.minapi = 35
+#android.minapi = 35
 
 # (int) Android SDK version to use
-android.sdk = 35
+#android.sdk = 35
 
 # (str) Android NDK version to use
-android.ndk = r27
+#android.ndk = 2b
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
-android.ndk_api = 35
+#android.ndk_api = 35
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
 #android.ndk_path =

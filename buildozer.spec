@@ -103,7 +103,7 @@ android.presplash_color = #181818
 
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions.html for all the supported syntaxes and properties)
-android.permissions = android.permission.ACCESS_BACKGROUND_LOCATION, android.permission.ACCESS_FINE_LOCATION, android.permission.ACCESS_COARSE_LOCATION
+android.permissions = android.permission.ACCESS_BACKGROUND_LOCATION, android.permission.ACCESS_FINE_LOCATION, android.permission.ACCESS_COARSE_LOCATION, android.permission.POST_NOTIFICATIONS
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
@@ -112,16 +112,16 @@ android.permissions = android.permission.ACCESS_BACKGROUND_LOCATION, android.per
 android.api = 35
 
 # (int) Minimum API your APK / AAB will support.
-#android.minapi = 35
+android.minapi = 35
 
 # (int) Android SDK version to use
-#android.sdk = 35
+android.sdk = 35
 
 # (str) Android NDK version to use
-#android.ndk = 2b
+android.ndk = 27
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
-#android.ndk_api = 35
+android.ndk_api = 35
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
 #android.ndk_path =

@@ -1,4 +1,3 @@
-import kivy
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.uix.widget import Widget

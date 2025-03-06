@@ -52,27 +52,37 @@ class Condition():
         self.min_hour: int = TIME_LIMIT[0][0]
         self.max_hour: int = TIME_LIMIT[1][0]
         self.data_hour: int = DATA['set_hour']
+    
     def timeCon(self, Condition: int) -> bool:
         self.Condition: int = Condition
+    
         def checkHour() -> bool:
                 match self.Condition:
                         case 1: return (localtime().tm_hour == self.min_hour == self.data_hour == self.max_hour)
                         case 2: return (self.min_hour == self.data_hour != self.max_hour) or (self.min_hour != self.data_hour == self.max_hour)
+    
         def checkMin() -> bool:
                 match self.Condition:
                         case 1: return TIME_LIMIT[0][1] <= localtime().tm_min < TIME_LIMIT[1][1]
                         case 2: return ((localtime().tm_hour == self.min_hour and localtime().tm_min >= TIME_LIMIT[0][1]) or
                                         (localtime().tm_hour == self.max_hour and localtime().tm_min < TIME_LIMIT[1][1]))
         return (checkHour() and checkMin())
+    
     def isTimeButtonReady(self) -> bool:
         return (DATA['last_time_btn_used'] == 0) or (int(time()) - (DATA['last_time_btn_used']) > 1800) #30 Min
+    
     def isMessageReady(self) -> bool:
         return (DATA['last_time_msg_sent'] == 0) or (int(time()) - (DATA['last_time_msg_sent']) > 300) #5 Min
+    
     def sendMessage(self):
         DATA.update({'last_time_msg_sent': int(time())})
         json.dump(DATA, open(DATA_LOCATION, 'w'))
         from plyer import notification
-        notification.notify(title = f'{TITLE}', message = f'📅It\'s {DATA["streak_month"]} month and {DATA["streak_day"]} day📅\n🤍Come here and Check-in🤍', app_icon = ICON_MSG)
+        notification.notify(title = f'{TITLE}',
+                            message = f'📅It\'s {DATA["streak_month"]} month and {DATA["streak_day"]} day📅\n🤍Come here and Check-in🤍',
+                            app_icon = ICON_MSG
+                            )
+    
     def dayStreak(self):
         if DATA['streak_day'] == 28: 
             DATA.update({'streak_day': DATA['streak_day'] - 28, 'streak_month': DATA['streak_month'] + 1})
@@ -98,14 +108,17 @@ class Home(Screen):
         super().__init__(**kwargs)
         self.background_home = BG_HOME_UNREADY
         self.eye_btn_disabled = True
+    
     def on_enter(self):
         self.setHintText()
+    
     def setHintText(self):
         if DATA['set_hour'] == None: self.set_hour = 'Hours ---> 0 - 23'
         else: self.set_hour = f'Now set at hour : {DATA["set_hour"]}'
             
         if DATA['set_min'] == None: self.set_min = 'Minutes ---> 0 - 59'
         else: self.set_min = f'Now set at minute : {DATA["set_min"]}'
+    
     def checkSetTime(self):
         if ((self.ids['Hours'].text != '') and (self.ids['Minutes'].text != '')):
             self.background_home = BG_HOME_READY
@@ -113,6 +126,7 @@ class Home(Screen):
         else:
             self.background_home = BG_HOME_UNREADY
             self.eye_btn_disabled = True
+    
     def setTimeOutOfBound(self, sender):
         self.sender = sender
         try:
@@ -125,6 +139,7 @@ class Home(Screen):
                     elif int(self.ids['Minutes'].text) < 0: self.ids['Minutes'].text = '0'            
         except ValueError:
             pass
+    
     def setTimeInJSON(self):
         DATA.update({'set_hour': int(self.ids['Hours'].text), 'set_min': int(self.ids['Minutes'].text)})
         json.dump(DATA, open(DATA_LOCATION, 'w'))
@@ -149,6 +164,7 @@ class Main(Screen):
         self.time_btn_transparent = 0
         self.time_btn_disabled = True
         self.background_main = BG_MAIN
+
     def Check_Time(self, *args) -> None:
         if Condition().isTimeButtonReady() and (Condition().timeCon(1) or Condition().timeCon(2)):
             self.time_btn_transparent = 1
@@ -156,6 +172,7 @@ class Main(Screen):
             self.background_main = BG_MAIN_ON_TIME
         else:
             self.setNormal()
+    
     def Streak(self) -> None:
         self.setNormal()
         DATA.update({'streak_day': DATA['streak_day'] + 1, 'last_time_btn_used': int(time())})
@@ -163,7 +180,7 @@ class Main(Screen):
 
 class PotionTime(App):
     def on_start(self):
-        from kivy import platform
+        from kivy.utils import platform
         if platform == "android":
             self.start_service()
 

@@ -144,8 +144,7 @@ class Main(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setNormal()
-        self.updater = Clock.schedule_interval(self.Check_Time, 1)
-        self.updater()
+        Clock.schedule_interval(self.Check_Time, 1)
 
     def setNormal(self) -> None:
         self.time_btn_transparent = 0

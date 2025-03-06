@@ -42,7 +42,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,pyjnius==1.6.1,plyer==2.1.0,pillow,Cython==0.29.37,asyncgui,asynckivy,exceptiongroup
+requirements = python3,kivy,pyjnius==1.6.1,plyer==2.1.0,pillow,sdl2_ttf
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -69,7 +69,7 @@ services = PotionTime:service.py
 
 #
 # OSX Specific
-#
+osx.python_version = 3
 
 #
 # author = © Copyright Info
@@ -103,25 +103,25 @@ android.presplash_color = #181818
 
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions.html for all the supported syntaxes and properties)
-#android.permissions = android.permission.INTERNET, (name=android.permission.WRITE_EXTERNAL_STORAGE;maxSdkVersion=18)
+android.permissions = android.permission.ACCESS_BACKGROUND_LOCATION, android.permission.ACCESS_FINE_LOCATION, android.permission.ACCESS_COARSE_LOCATION
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
 
 # (int) Target Android API, should be as high as possible.
-#android.api = 31
+android.api = 35
 
 # (int) Minimum API your APK / AAB will support.
-#android.minapi = 21
+android.minapi = 31
 
 # (int) Android SDK version to use
-#android.sdk = 20
+android.sdk = 35
 
 # (str) Android NDK version to use
-#android.ndk = 23b
+android.ndk = r27c
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
-#android.ndk_api = 21
+android.ndk_api = 31
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
 #android.ndk_path =
@@ -135,7 +135,7 @@ android.presplash_color = #181818
 # (bool) If True, then skip trying to update the Android SDK
 # This can be useful to avoid excess Internet downloads or save time
 # when an update is due and you just want to test/build your package
-# android.skip_update = False
+android.skip_update = True
 
 # (bool) If True, then automatically accept SDK license
 # agreements. This is intended for automation only. If set to False,

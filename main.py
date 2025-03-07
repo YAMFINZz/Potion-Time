@@ -187,6 +187,7 @@ class PotionTime(App):
     def build(self):
         self.title = TITLE
         self.icon = ICON
+        Builder.load_file('main.kv')
         return Manager()
     
     @staticmethod
@@ -196,8 +197,5 @@ class PotionTime(App):
         mActivity = autoclass("org.kivy.android.PythonActivity").mActivity
         service.start(mActivity, "")
         return service
-
-
-Builder.load_file('main.kv')
-Window.clearcolor = THARMAR_BLACK
+        
 PotionTime().run()

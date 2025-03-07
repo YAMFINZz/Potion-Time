@@ -194,7 +194,7 @@ class PotionTime(App):
     @staticmethod
     def start_service():
         from jnius import autoclass
-        service = autoclass(u'org.yamfinzz.potiontime.ServicePotionTime')
+        service = autoclass(u'org.yamfinzz.potiontime.ServicePotiontime')
         mActivity = autoclass(u'org.kivy.android.PythonActivity').mActivity
         service.start(mActivity, '')
         return service

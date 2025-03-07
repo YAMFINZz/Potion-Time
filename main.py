@@ -179,24 +179,24 @@ class Main(Screen):
         Condition().dayStreak()
 
 class PotionTime(App):
-    '''
+    
     def on_start(self):
         from kivy.utils import platform
-        if platform == "android":
+        if platform == 'android':
             self.start_service()
-    '''
+    
     def build(self):
         self.title = TITLE
         self.icon = ICON
         Builder.load_file('main.kv')
         return Manager()
-    '''
+    
     @staticmethod
     def start_service():
         from jnius import autoclass
-        service = autoclass("org.yamfinzz.potiontime.ServicePotionTime")
-        mActivity = autoclass("org.kivy.android.PythonActivity").mActivity
-        service.start(mActivity, "")
+        service = autoclass(u'org.yamfinzz.potiontime.ServicePotionTime')
+        mActivity = autoclass(u'org.kivy.android.PythonActivity').mActivity
+        service.start(mActivity, '')
         return service
-    '''    
+        
 PotionTime().run()

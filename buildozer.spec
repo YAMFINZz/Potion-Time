@@ -65,7 +65,7 @@ orientation = portrait
 # launched. This is optionally followed by ":foreground" for foreground services or
 # ":foreground:sticky" for sticky foreground services. The default is a background service.
 # Bound services are not supported.
-#services = PotionTime:service.py
+services = PotionTime:service.py
 
 #
 # OSX Specific

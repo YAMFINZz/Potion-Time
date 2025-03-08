@@ -17,8 +17,8 @@ def isMessageReady() -> bool:
 def sendMessage() -> None:
     DATA.update({'last_time_msg_sent': int(time())})
     json.dump(DATA, open(DATA_LOCATION, 'w'))
-    from plyer import notification
-    notification.notify(title = 'Potion TIME!', message = f'📅It\'s {DATA["streak_month"]} month and {DATA["streak_day"]} day📅\n🤍Come here and Check-in🤍',app_icon = 'assets/img/icon/icon.ico')
+    from plyer.platforms.android.notification import AndroidNotification
+    AndroidNotification().notify(title = 'Potion TIME!', message = f'📅It\'s {DATA["streak_month"]} month and {DATA["streak_day"]} day📅\n🤍Come here and Check-in🤍',app_icon = 'assets/img/icon/icon.ico')
 
 while True:
     DATA: dict = json.load(open(DATA_LOCATION, "r"))
@@ -27,4 +27,3 @@ while True:
         if isMessageReady(): 
             sendMessage()
     sleep(1)
-

@@ -4,87 +4,17 @@ from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from kivy.properties import BooleanProperty, ObjectProperty, StringProperty
 from kivy.lang import Builder
 
-from time import localtime, time
-import json
+from class_libs import *
 
 TITLE: str = "Potion TIME!"
-ICON, ICON_MSG = ['assets/img/icon/icon.png', 'assets/img/icon/icon.ico']
+ICON: str = 'assets/img/icon/icon.png'
 BG_MAIN, BG_MAIN_ON_TIME = ['assets/img/bg/bg.png', 'assets/img/bg/bg_ontime.png']
 BG_HOME_UNREADY, BG_HOME_READY = ['assets/img/bg/bg_home_unready.png', 'assets/img/bg/bg_home_ready.png']
 
-DATA_LOCATION: str = 'assets/data/data.json'
 DATA: dict = json.load(open(DATA_LOCATION, "r"))
 
-try:
-    TIME_LIMIT: list[tuple] = [(DATA['set_hour'], DATA['set_min']-15), (DATA['set_hour'], DATA['set_min']+15)]
-    isTimeSet: bool = True
-except TypeError:
-    TIME_LIMIT: list[tuple] = [(None, None), (None, None)]
-    isTimeSet: bool = False
-
-class timeCalc():
-    def __init__(self, hour: int, min: int) -> None:
-        self.min_t, self.max_t = [[None, None], [None, None]]
-        self.time = [hour, min]
-        self.min_time()
-        self.max_time()
-        del self.time       
-    def min_time(self) -> None:
-        if self.time[1]-15 < 0:
-            self.min_t[0] = self.time[0]-1
-            if self.min_t[0] < 0:
-                self.min_t[0] = self.min_t[0]+24
-            self.min_t[1] = self.time[1]+45
-            TIME_LIMIT[0] = (self.min_t[0], self.min_t[1])
-            del self.min_t
-    def max_time(self) -> None:
-        if self.time[1]+15 >= 60:
-            self.max_t[0] = self.time[0]+1
-            if self.max_t[0] >= 24:
-                self.max_t[0] = self.max_t[0]-24
-            self.max_t[1] = self.time[1]-45
-            TIME_LIMIT[1] = (self.max_t[0], self.max_t[1])
-            del self.max_t
-class Condition():
-    def __init__(self) -> None:
-        self.min_hour: int = TIME_LIMIT[0][0]
-        self.max_hour: int = TIME_LIMIT[1][0]
-        self.data_hour: int = DATA['set_hour']
-    
-    def timeCon(self, Condition: int) -> bool:
-        self.Condition: int = Condition
-    
-        def checkHour() -> bool:
-                match self.Condition:
-                        case 1: return (localtime().tm_hour == self.min_hour == self.data_hour == self.max_hour)
-                        case 2: return (self.min_hour == self.data_hour != self.max_hour) or (self.min_hour != self.data_hour == self.max_hour)
-    
-        def checkMin() -> bool:
-                match self.Condition:
-                        case 1: return TIME_LIMIT[0][1] <= localtime().tm_min < TIME_LIMIT[1][1]
-                        case 2: return ((localtime().tm_hour == self.min_hour and localtime().tm_min >= TIME_LIMIT[0][1]) or
-                                        (localtime().tm_hour == self.max_hour and localtime().tm_min < TIME_LIMIT[1][1]))
-        return (checkHour() and checkMin())
-    
-    def isTimeButtonReady(self) -> bool:
-        return (DATA['last_time_btn_used'] == 0) or (int(time()) - (DATA['last_time_btn_used']) > 1800) #30 Min
-    
-    def isMessageReady(self) -> bool:
-        return (DATA['last_time_msg_sent'] == 0) or (int(time()) - (DATA['last_time_msg_sent']) > 300) #5 Min
-    
-    def sendMessage(self):
-        DATA.update({'last_time_msg_sent': int(time())})
-        json.dump(DATA, open(DATA_LOCATION, 'w'))
-        from plyer import notification
-        notification.notify(title = f'{TITLE}',
-                            message = f'📅It\'s {DATA["streak_month"]} month and {DATA["streak_day"]} day📅\n🤍Come here and Check-in🤍',
-                            app_icon = ICON_MSG
-                            )
-    
-    def dayStreak(self):
-        if DATA['streak_day'] == 28: 
-            DATA.update({'streak_day': DATA['streak_day'] - 28, 'streak_month': DATA['streak_month'] + 1})
-        json.dump(DATA, open(DATA_LOCATION, 'w'))
+if (DATA['set_hour'] != None) and (DATA['set_min'] != None): isTimeSet: bool = True
+else: isTimeSet: bool = False
 
 class Manager(ScreenManager):
     def __init__(self):
@@ -141,10 +71,12 @@ class Home(Screen):
     def setTimeInJSON(self):
         DATA.update({'set_hour': int(self.ids['Hours'].text), 'set_min': int(self.ids['Minutes'].text)})
         json.dump(DATA, open(DATA_LOCATION, 'w'))
-        TIME_LIMIT[0], TIME_LIMIT[1] = [(DATA['set_hour'], DATA['set_min']-15), (DATA['set_hour'], DATA['set_min']+15)]
+        
         timeCalc(DATA['set_hour'], DATA['set_min'])
+
         global isTimeSet
         isTimeSet = True
+        
         self.ids['Hours'].text, self.ids['Minutes'].text = ['', '']
 
 class Main(Screen):
@@ -174,6 +106,7 @@ class Main(Screen):
     def Streak(self) -> None:
         self.setNormal()
         DATA.update({'streak_day': DATA['streak_day'] + 1, 'last_time_btn_used': int(time())})
+        json.dump(DATA, open(DATA_LOCATION, 'w'))
         Condition().dayStreak()
 
 class PotionTime(App):
@@ -195,6 +128,5 @@ class PotionTime(App):
         mActivity = autoclass(u'org.kivy.android.PythonActivity').mActivity
         service.start(mActivity, '')
         return service
-    
-if __name__=='__main__': PotionTime().run()
-else: pass
+
+PotionTime().run()

@@ -1,7 +1,5 @@
 from kivy.app import App
 from kivy.clock import Clock
-from kivy.uix.widget import Widget
-from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from kivy.properties import BooleanProperty, ObjectProperty, StringProperty
 from kivy.lang import Builder
@@ -13,7 +11,7 @@ TITLE: str = "Potion TIME!"
 ICON, ICON_MSG = ['assets/img/icon/icon.png', 'assets/img/icon/icon.ico']
 BG_MAIN, BG_MAIN_ON_TIME = ['assets/img/bg/bg.png', 'assets/img/bg/bg_ontime.png']
 BG_HOME_UNREADY, BG_HOME_READY = ['assets/img/bg/bg_home_unready.png', 'assets/img/bg/bg_home_ready.png']
-THARMAR_BLACK: str = '#181818'
+
 DATA_LOCATION: str = 'assets/data/data.json'
 DATA: dict = json.load(open(DATA_LOCATION, "r"))
 
@@ -179,7 +177,6 @@ class Main(Screen):
         Condition().dayStreak()
 
 class PotionTime(App):
-    
     def on_start(self):
         from kivy.utils import platform
         if platform == 'android':
@@ -198,5 +195,5 @@ class PotionTime(App):
         mActivity = autoclass(u'org.kivy.android.PythonActivity').mActivity
         service.start(mActivity, '')
         return service
-        
+    
 PotionTime().run()

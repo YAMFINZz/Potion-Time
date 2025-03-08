@@ -196,4 +196,5 @@ class PotionTime(App):
         service.start(mActivity, '')
         return service
     
-PotionTime().run()
+if __name__=='__main__': PotionTime().run()
+else: pass

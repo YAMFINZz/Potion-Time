@@ -41,7 +41,7 @@ class Condition():
         self.min_hour: int = self.TIME_LIMIT['0']['0']
         self.max_hour: int = self.TIME_LIMIT['1']['0']
         self.data_hour: int = self.DATA['set_hour']
-    
+
     def timeCon(self, Condition: int) -> bool:
         self.Condition: int = Condition
     
@@ -60,21 +60,9 @@ class Condition():
     def isTimeButtonReady(self) -> bool:
         return (self.DATA['last_time_btn_used'] == 0) or (int(time()) - (self.DATA['last_time_btn_used']) > 1800) #30 Min
     
-    def isMessageReady(self) -> bool:
-        return (self.DATA['last_time_msg_sent'] == 0) or (int(time()) - (self.DATA['last_time_msg_sent']) > 300) #5 Min
-    
-    def sendMessage(self):
-        self.DATA.update({'last_time_msg_sent': int(time())})
-        json.dump(self.DATA, open(DATA_LOCATION, 'w'))
-        from plyer import notification
-        notification.notify(title = 'Potion TIME!',
-                            message = f'📅It\'s {self.DATA["streak_month"]} month and {self.DATA["streak_day"]} day📅\n🤍Come here and Check-in🤍',
-                            app_icon = 'assets/img/icon/icon.ico'
-                            )
-    
     def dayStreak(self):
         if self.DATA['streak_day'] == 28: 
             self.DATA.update({'streak_day': self.DATA['streak_day'] - 28, 'streak_month': self.DATA['streak_month'] + 1})
             json.dump(self.DATA, open(DATA_LOCATION, 'w'))
 
-
+Condition()

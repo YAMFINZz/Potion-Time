@@ -26,9 +26,9 @@ while True:
     print(f'isTimeSet() : {isTimeSet()}')
     print(f'Condition().isTimeButtonReady() : {Condition().isTimeButtonReady()}')
     print(f'(Condition().timeCon(1, 2) : {(Condition().timeCon(1) or Condition().timeCon(2))}')
-    print(f'isMessageReady() : {isMessageReady()}')    
+    print(f'isMessageReady() : {isMessageReady()}\n')    
     
     if (isTimeSet() and Condition().isTimeButtonReady()) and (Condition().timeCon(1) or Condition().timeCon(2)):
         if isMessageReady(): 
             sendMessage()
-    sleep(1)
+    sleep(5)

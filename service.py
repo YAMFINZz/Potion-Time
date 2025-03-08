@@ -5,9 +5,9 @@ PythonService.mService.setAutoRestartService(True)
 
 
 from time import sleep
-from main import Condition, isTimeSet
 
 while True:
+    from main import Condition, isTimeSet
     print(f'Service Checking | isTimeSet : {isTimeSet}')
     if isTimeSet and Condition().isTimeButtonReady() and (Condition().timeCon(1) or Condition().timeCon(2)):
         if Condition().isMessageReady():

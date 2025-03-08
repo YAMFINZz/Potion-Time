@@ -22,7 +22,12 @@ def sendMessage() -> None:
 
 while True:
     DATA: dict = json.load(open(DATA_LOCATION, "r"))
-
+    
+    print(f'isTimeSet() : {isTimeSet()}')
+    print(f'Condition().isTimeButtonReady() : {Condition().isTimeButtonReady()}')
+    print(f'(Condition().timeCon(1, 2) : {(Condition().timeCon(1) or Condition().timeCon(2))}')
+    print(f'isMessageReady() : {isMessageReady()}')    
+    
     if (isTimeSet() and Condition().isTimeButtonReady()) and (Condition().timeCon(1) or Condition().timeCon(2)):
         if isMessageReady(): 
             sendMessage()

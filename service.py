@@ -5,6 +5,7 @@ PythonService.mService.setAutoRestartService(True)
 
 
 from time import sleep
+from threading import Thread
 
 def messageService():
     from main import Condition, isTimeSet
@@ -15,4 +16,4 @@ def messageService():
                 Condition().sendMessage()
         sleep(1)
 
-messageService()
+Thread(target=messageService, daemon=True).start()

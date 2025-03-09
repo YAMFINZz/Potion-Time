@@ -49,7 +49,7 @@ icon.filename = %(source.dir)s/assets/img/icon/icon.png
 
 orientation = portrait
 
-services = Potiontime:service.py:foreground:sticky
+services = Potiontime:service.py
 
 #
 # OSX Specific
@@ -87,7 +87,7 @@ android.presplash_color = #181818
 
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions.html for all the supported syntaxes and properties)
-android.permissions = ACCESS_BACKGROUND_LOCATION, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, POST_NOTIFICATIONS, FOREGROUND_SERVICE
+android.permissions = ACCESS_BACKGROUND_LOCATION, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, POST_NOTIFICATIONS
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
@@ -190,7 +190,7 @@ android.accept_sdk_license = True
 # 3) A directory, here 'legal_resources' must contain one or more directories, 
 # each of a resource kind:  drawable, xml, etc...
 # android.add_resources = legal_resources
-#android.add_resources =
+android.add_resources = assets/img/icon:drawable
 
 # (list) Gradle dependencies to add
 #android.gradle_dependencies = androidx.work:work-runtime:2.2.0

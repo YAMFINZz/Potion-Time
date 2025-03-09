@@ -1,9 +1,12 @@
 from time import sleep
 from class_libs import *
 from jnius import autoclass
+from message_service import create_channel, create_notification
 
 PythonService = autoclass(u'org.kivy.android.PythonService')
 PythonService.mService.setAutoRestartService(True)
+
+create_channel()
 
 def isTimeSet() -> bool:
     if (DATA['set_hour'] != None) and (DATA['set_min'] != None):
@@ -17,14 +20,12 @@ def isMessageReady() -> bool:
 def sendMessage():
     DATA.update({'last_time_msg_sent': int(time())})
     json.dump(DATA, open(DATA_LOCATION, 'w'))
-    from plyer import notification
-    notification.notify(title = 'Potion TIME!', message = f'📅It\'s {DATA["streak_month"]} month and {DATA["streak_day"]} day📅\n🤍Come here and Check-in🤍',app_icon = 'assets/img/icon/icon.ico')
-
+    create_notification()
+    
 while True:
     DATA: dict = json.load(open(DATA_LOCATION, "r"))
     
     if (isTimeSet() and Condition().isTimeButtonReady()) and (Condition().timeCon(1) or Condition().timeCon(2)):
         if isMessageReady():
-            try: sendMessage()
-            except AttributeError: print("ATTR ERROR")
+            sendMessage()
     sleep(5)

@@ -1,9 +1,5 @@
 from time import sleep
 from class_libs import *
-from jnius import autoclass
-
-PythonService = autoclass(u'org.kivy.android.PythonService')
-PythonService.mService.setAutoRestartService(True)
 
 def isMessageReady() -> bool:
     return (DATA['last_time_msg_sent'] == 0) or (int(time()) - (DATA['last_time_msg_sent']) > 300)

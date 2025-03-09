@@ -49,7 +49,7 @@ icon.filename = %(source.dir)s/assets/img/icon/icon.png
 
 orientation = portrait
 
-services = Potiontime:service.py:foreground
+services = Potiontime:service.py:foreground:sticky
 
 #
 # OSX Specific

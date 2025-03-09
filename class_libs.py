@@ -60,7 +60,13 @@ class Condition():
     def isTimeButtonReady(self) -> bool:
         return (self.DATA['last_time_btn_used'] == 0) or (int(time()) - (self.DATA['last_time_btn_used']) > 1800) #30 Min
     
-    def dayStreak(self):
+    def dayStreak(self) -> None:
         if self.DATA['streak_day'] == 28: 
             self.DATA.update({'streak_day': self.DATA['streak_day'] - 28, 'streak_month': self.DATA['streak_month'] + 1})
             json.dump(self.DATA, open(DATA_LOCATION, 'w'))
+
+    def isTimeSet(self) -> bool:
+        if (self.DATA['set_hour'] != None) and (self.DATA['set_min'] != None):
+            timeCalc(self.DATA['set_hour'], self.DATA['set_min'])
+            return True
+        else: return False

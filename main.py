@@ -13,22 +13,29 @@ BG_HOME_UNREADY, BG_HOME_READY = ['assets/img/bg/bg_home_unready.png', 'assets/i
 
 DATA: dict = json.load(open(DATA_LOCATION, "r"))
 
-if (DATA['set_hour'] != None) and (DATA['set_min'] != None): isTimeSet: bool = True
-else: isTimeSet: bool = False
+def start_service():
+    from jnius import autoclass
+    service = autoclass(u'org.yamfinzz.potiontime.ServicePotiontime')
+    mActivity = autoclass(u'org.kivy.android.PythonActivity').mActivity
+    service.start(mActivity, '')
+    return service
 
+from kivy.utils import platform
+if platform == 'android':
+    start_service()
 
 def sendMessage():
     DATA.update({'last_time_msg_sent': int(time())})
     json.dump(DATA, open(DATA_LOCATION, 'w'))
-    from plyer import notification
-    notification.notify(title = 'Potion TIME!!!', message = f'🤍Time to use your Potion!🤍',app_icon = 'assets/img/icon/icon.png')
+    from plyer.platforms.android.notification import AndroidNotification
+    AndroidNotification().notify(title = 'Potion TIME!!!', message = f'🤍Time to use your Potion!🤍',app_icon = 'assets/img/icon/icon.png')
 
 
 class Manager(ScreenManager):
     def __init__(self):
         super().__init__()
         self.transition = NoTransition()
-        if isTimeSet:
+        if Condition().isTimeSet():
             timeCalc(DATA['set_hour'], DATA['set_min'])
             self.current = 'main'
         else:
@@ -81,9 +88,6 @@ class Home(Screen):
         json.dump(DATA, open(DATA_LOCATION, 'w'))
         
         timeCalc(DATA['set_hour'], DATA['set_min'])
-
-        global isTimeSet
-        isTimeSet = True
         
         self.ids['Hours'].text, self.ids['Minutes'].text = ['', '']
 
@@ -118,10 +122,6 @@ class Main(Screen):
         Condition().dayStreak()
 
 class PotionTime(App):
-    def on_start(self):
-        from kivy.utils import platform
-        if platform == 'android':
-            self.start_service()
     
     def build(self):
         self.title = TITLE
@@ -129,13 +129,6 @@ class PotionTime(App):
         Builder.load_file('main.kv')
         return Manager()
     
-    @staticmethod
-    def start_service():
-        from jnius import autoclass
-        service = autoclass(u'org.yamfinzz.potiontime.ServicePotiontime')
-        mActivity = autoclass(u'org.kivy.android.PythonActivity').mActivity
-        service.start(mActivity, '')
-        return service
     
 if __name__ == '__main__':
     PotionTime().run()

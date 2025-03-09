@@ -40,32 +40,16 @@ version = 1.0
 # version.regex = __version__ = ['"](.*)['"]
 # version.filename = %(source.dir)s/main.py
 
-# (list) Application requirements
-# comma separated e.g. requirements = sqlite3,kivy
 requirements = python3,kivy,pyjnius==1.6.1,https://github.com/kivy/plyer/archive/refs/heads/master.zip,pillow,sdl2_ttf,android
 
-# (str) Custom source folders for requirements
-# Sets custom source for any requirements with recipes
 # requirements.source.kivy = ../../kivy
 
-# (str) Presplash of the application
 presplash.filename = %(source.dir)s/assets/img/presplash.png
-
-# (str) Icon of the application
 icon.filename = %(source.dir)s/assets/img/icon/icon.png
 
-# (list) Supported orientations
-# Valid options are: landscape, portrait, portrait-reverse or landscape-reverse
 orientation = portrait
 
-# (list) List of services to declare
-# This is currently only relevant to Android services.
-# Each service consists of a name (a valid Java class name, with the first letter capitalized)
-# followed by a colon, followed by the name of the Python script (.py file) that should be
-# launched. This is optionally followed by ":foreground" for foreground services or
-# ":foreground:sticky" for sticky foreground services. The default is a background service.
-# Bound services are not supported.
-services = Potiontime:service.py
+services = Potiontime:service.py:foreground
 
 #
 # OSX Specific
@@ -103,7 +87,7 @@ android.presplash_color = #181818
 
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions.html for all the supported syntaxes and properties)
-android.permissions = ACCESS_BACKGROUND_LOCATION, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, POST_NOTIFICATIONS
+android.permissions = ACCESS_BACKGROUND_LOCATION, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, POST_NOTIFICATIONS, FOREGROUND_SERVICE
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host

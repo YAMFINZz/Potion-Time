@@ -64,5 +64,3 @@ class Condition():
         if self.DATA['streak_day'] == 28: 
             self.DATA.update({'streak_day': self.DATA['streak_day'] - 28, 'streak_month': self.DATA['streak_month'] + 1})
             json.dump(self.DATA, open(DATA_LOCATION, 'w'))
-
-Condition()

@@ -16,6 +16,14 @@ DATA: dict = json.load(open(DATA_LOCATION, "r"))
 if (DATA['set_hour'] != None) and (DATA['set_min'] != None): isTimeSet: bool = True
 else: isTimeSet: bool = False
 
+
+def sendMessage():
+    DATA.update({'last_time_msg_sent': int(time())})
+    json.dump(DATA, open(DATA_LOCATION, 'w'))
+    from plyer import notification
+    notification.notify(title = 'Potion TIME!!!', message = f'🤍Time to use your Potion!🤍',app_icon = 'assets/img/icon/icon.png')
+
+
 class Manager(ScreenManager):
     def __init__(self):
         super().__init__()
@@ -128,5 +136,6 @@ class PotionTime(App):
         mActivity = autoclass(u'org.kivy.android.PythonActivity').mActivity
         service.start(mActivity, '')
         return service
-
-PotionTime().run()
+    
+if __name__ == '__main__':
+    PotionTime().run()

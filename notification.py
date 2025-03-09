@@ -2,7 +2,7 @@ from android import python_act
 from android.runnable import run_on_ui_thread
 from jnius import autoclass, cast
 
-from plyer.facades import Notification
+from base_notification import Notification
 from plyer.platforms.android import activity, SDK_INT
 
 AndroidString = autoclass('java.lang.String')
@@ -83,7 +83,7 @@ class AndroidNotification(Notification):
         .. versionadded:: 1.4.0
         '''
 
-        app_icon = Drawable.your_icon_name_without_extensionname
+        app_icon = Drawable.icon
         notification.setSmallIcon(app_icon)
 
         bitmap_icon = app_icon

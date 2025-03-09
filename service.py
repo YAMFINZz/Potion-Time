@@ -10,7 +10,9 @@ def isMessageReady() -> bool:
 
 def sendMessage():
     from notification import AndroidNotification
-    AndroidNotification().notify(title = 'Potion TIME!!!',
+    AndroidNotification().notify(
+                                chan = 1,
+                                title = 'Potion TIME!!!',
                                 message = '🤍Time to use your Potion!🤍',
                                 app_icon = 'assets/img/icon/icon.png',
                                 app_name = 'Potion Time'

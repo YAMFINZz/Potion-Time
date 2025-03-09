@@ -13,12 +13,6 @@ BG_HOME_UNREADY, BG_HOME_READY = ['assets/img/bg/bg_home_unready.png', 'assets/i
 
 DATA: dict = json.load(open(DATA_LOCATION, "r"))
 
-def sendMessage():
-    DATA.update({'last_time_msg_sent': int(time())})
-    json.dump(DATA, open(DATA_LOCATION, 'w'))
-    from plyer.platforms.android.notification import AndroidNotification
-    AndroidNotification().notify(title = 'Potion TIME!!!', message = f'🤍Time to use your Potion!🤍',app_icon = 'assets/img/icon/icon.png')
-
 class Manager(ScreenManager):
     def __init__(self):
         super().__init__()

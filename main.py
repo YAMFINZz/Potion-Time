@@ -13,23 +13,11 @@ BG_HOME_UNREADY, BG_HOME_READY = ['assets/img/bg/bg_home_unready.png', 'assets/i
 
 DATA: dict = json.load(open(DATA_LOCATION, "r"))
 
-def start_service():
-    from jnius import autoclass
-    service = autoclass(u'org.yamfinzz.potiontime.ServicePotiontime')
-    mActivity = autoclass(u'org.kivy.android.PythonActivity').mActivity
-    service.start(mActivity, '')
-    return service
-
-from kivy.utils import platform
-if platform == 'android':
-    start_service()
-
 def sendMessage():
     DATA.update({'last_time_msg_sent': int(time())})
     json.dump(DATA, open(DATA_LOCATION, 'w'))
     from plyer.platforms.android.notification import AndroidNotification
     AndroidNotification().notify(title = 'Potion TIME!!!', message = f'🤍Time to use your Potion!🤍',app_icon = 'assets/img/icon/icon.png')
-
 
 class Manager(ScreenManager):
     def __init__(self):
@@ -122,13 +110,24 @@ class Main(Screen):
         Condition().dayStreak()
 
 class PotionTime(App):
-    
+    def on_start(self):
+        from kivy.utils import platform
+        if platform == 'android':
+            self.start_service()
+
     def build(self):
         self.title = TITLE
         self.icon = ICON
         Builder.load_file('main.kv')
         return Manager()
     
-    
+    @staticmethod
+    def start_service():
+        from jnius import autoclass
+        service = autoclass(u'org.yamfinzz.potiontime.ServicePotiontime')
+        mActivity = autoclass(u'org.kivy.android.PythonActivity').mActivity
+        service.start(mActivity, '')
+        return service
+
 if __name__ == '__main__':
     PotionTime().run()

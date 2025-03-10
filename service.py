@@ -10,12 +10,11 @@ def isMessageReady() -> bool:
     return (DATA['last_time_msg_sent'] == 0) or (int(time()) - (DATA['last_time_msg_sent']) > 300)
 
 def sendMessage():
-    from android_notify import Notification
-    Notification(title = 'Potion TIME!!!',
-                message = '🤍Time to use your Potion!🤍',
-                style="large_icon",
-                large_icon_path="assets/img/icon/icon.png"
-                ).send()
+    from plyer import notification
+    notification.notify(chan = 0,
+                        title = 'Potion TIME!!!',
+                        message = '🤍Time to use your Potion!🤍'
+                        )
     DATA.update({'last_time_msg_sent': int(time())})
     json.dump(DATA, open(DATA_LOCATION, 'w'))
 

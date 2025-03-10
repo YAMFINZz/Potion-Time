@@ -12,7 +12,7 @@ def sendMessage():
     notification.notify(chan = 1,
                         title = 'Potion TIME!!!',
                         message = '🤍Time to use your Potion!🤍',
-                        app_icon = 'assets/img/icon/icon.png',
+                        app_icon = 'assets/img/icon/icon.png'
                         )
     DATA.update({'last_time_msg_sent': int(time())})
     json.dump(DATA, open(DATA_LOCATION, 'w'))

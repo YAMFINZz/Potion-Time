@@ -40,7 +40,7 @@ version = 1.0
 # version.regex = __version__ = ['"](.*)['"]
 # version.filename = %(source.dir)s/main.py
 
-requirements = python3,kivy,pyjnius==1.6.1,https://github.com/kivy/plyer/archive/refs/heads/master.zip,pillow,sdl2_ttf,android
+requirements = python3,kivy,pyjnius==1.6.1,pillow,sdl2_ttf,android
 
 # requirements.source.kivy = ../../kivy
 

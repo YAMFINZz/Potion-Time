@@ -15,42 +15,8 @@ __all__ = (
 
 __version__ = '2.1.0'
 
-from facades.accelerometer import Accelerometer
-from facades.audio import Audio
-from facades.barometer import Barometer
-from facades.battery import Battery
-from facades.call import Call
-from facades.camera import Camera
-from facades.compass import Compass
-from facades.email import Email
-from facades.filechooser import FileChooser
-from facades.flash import Flash
-from facades.gps import GPS
-from facades.gravity import Gravity
-from facades.gyroscope import Gyroscope
-from facades.irblaster import IrBlaster
-from facades.light import Light
-from facades.proximity import Proximity
-from facades.orientation import Orientation
-from facades.notification import Notification
-from facades.sms import Sms
-from facades.stt import STT
-from facades.tts import TTS
-from facades.uniqueid import UniqueID
-from facades.vibrator import Vibrator
-from facades.wifi import Wifi
-from facades.temperature import Temperature
-from facades.humidity import Humidity
-from facades.spatialorientation import SpatialOrientation
-from facades.brightness import Brightness
-from facades.keystore import Keystore
-from facades.storagepath import StoragePath
-from facades.bluetooth import Bluetooth
-from facades.processors import Processors
-from facades.cpu import CPU
-from facades.screenshot import Screenshot
-from facades.devicename import DeviceName 
 
+from facades import *
 from utils import Proxy
 
 #: Accelerometer proxy to :class:`plyer.facades.Accelerometer`

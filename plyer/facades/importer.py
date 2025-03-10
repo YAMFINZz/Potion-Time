@@ -5,14 +5,14 @@ Facades
 Interface of all the features available.
 
 '''
- 
+
 __all__ = ('Accelerometer', 'Audio', 'Barometer', 'Battery', 'Call', 'Camera',
-            'Compass', 'Email', 'FileChooser', 'GPS', 'Gravity', 'Gyroscope',
-            'IrBlaster', 'Light', 'Orientation', 'Notification', 'Proximity',
-            'Sms', 'TTS', 'UniqueID', 'Vibrator', 'Wifi', 'Flash', 'CPU',
-            'Temperature', 'Humidity', 'SpatialOrientation', 'Brightness',
-            'Processors', 'StoragePath', 'Keystore', 'Bluetooth', 'Screenshot',
-            'STT', 'DeviceName')
+           'Compass', 'Email', 'FileChooser', 'GPS', 'Gravity', 'Gyroscope',
+           'IrBlaster', 'Light', 'Orientation', 'Notification', 'Proximity',
+           'Sms', 'TTS', 'UniqueID', 'Vibrator', 'Wifi', 'Flash', 'CPU',
+           'Temperature', 'Humidity', 'SpatialOrientation', 'Brightness',
+           'Processors', 'StoragePath', 'Keystore', 'Bluetooth', 'Screenshot',
+           'STT', 'DeviceName')
 
 from accelerometer import Accelerometer
 from audio import Audio
@@ -48,4 +48,4 @@ from bluetooth import Bluetooth
 from processors import Processors
 from cpu import CPU
 from screenshot import Screenshot
-from devicename import DeviceName 
+from devicename import DeviceName

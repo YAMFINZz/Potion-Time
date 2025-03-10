@@ -45,7 +45,7 @@ class Notification:
     Notification facade.
     '''
 
-    def notify(self, chan=0, title='', message='', app_name='', app_icon='',
+    def notify(self,chan=0, title='', message='', app_name='', app_icon='',
                timeout=10, ticker='', toast=False, hints={}):
         '''
         Send a notification.

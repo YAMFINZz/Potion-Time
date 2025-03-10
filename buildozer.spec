@@ -193,12 +193,12 @@ android.accept_sdk_license = True
 android.add_resources = assets/img/icon:drawable
 
 # (list) Gradle dependencies to add
-#android.gradle_dependencies = androidx.work:work-runtime:2.10.0
+android.gradle_dependencies = androidx.work:work-runtime:2.10.0
 
 # (bool) Enable AndroidX support. Enable when 'android.gradle_dependencies'
 # contains an 'androidx' package, or any package from Kotlin source.
 # android.enable_androidx requires android.api >= 28
-#android.enable_androidx = True
+android.enable_androidx = True
 
 # (list) add java compile options
 # this can for example be necessary when importing certain java libraries using the 'android.gradle_dependencies' option
@@ -319,7 +319,7 @@ android.allow_backup = True
 #p4a.fork = kivy
 
 # (str) python-for-android branch to use, defaults to master
-p4a.branch = master
+p4a.branch = debug
 
 # (str) python-for-android specific commit to use, defaults to HEAD, must be within p4a.branch
 #p4a.commit = HEAD

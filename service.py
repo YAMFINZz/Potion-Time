@@ -9,7 +9,7 @@ def isMessageReady() -> bool:
     return (DATA['last_time_msg_sent'] == 0) or (int(time()) - (DATA['last_time_msg_sent']) > 300)
 
 def sendMessage():
-    from assets.libs.plyer import notification
+    from plyer import notification
     notification.notify(chan = 1,
                         title = 'Potion TIME!!!',
                         message = '🤍Time to use your Potion!🤍',

@@ -49,7 +49,7 @@ icon.filename = %(source.dir)s/assets/img/icon/icon.png
 
 orientation = portrait
 
-services = Potiontime:service.py
+services = Potiontime:service.py:foreground:sticky
 
 #
 # OSX Specific
@@ -87,7 +87,7 @@ android.presplash_color = #181818
 
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions.html for all the supported syntaxes and properties)
-android.permissions = ACCESS_BACKGROUND_LOCATION, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, POST_NOTIFICATIONS
+android.permissions = ACCESS_BACKGROUND_LOCATION, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, POST_NOTIFICATIONS, FOREGROUND_SERVICE, BROADCAST_STICKY
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host

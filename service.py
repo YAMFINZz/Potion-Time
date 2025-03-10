@@ -25,4 +25,4 @@ while True:
     if (Condition().isTimeSet() and Condition().isTimeButtonReady()) and (Condition().timeCon(1) or Condition().timeCon(2)):
         if isMessageReady():
             sendMessage()
-    sleep(5)
+    sleep(1)

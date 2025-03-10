@@ -129,7 +129,7 @@ class AndroidNotification(Notification):
 
         # get our application Activity
         pending_intent = PendingIntent.getActivity(
-            app_context, 0, notification_intent, PendingIntent.FLAG_MUTABLE)
+            app_context, 0, notification_intent, PendingIntent.FLAG_IMMUTABLE)
 
         notification.setContentIntent(pending_intent)
         notification.setAutoCancel(True)

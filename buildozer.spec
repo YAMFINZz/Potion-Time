@@ -1,23 +1,12 @@
-# This .spec config file tells Buildozer an app's requirements for being built.
-#
-# It largely follows the syntax of an .ini file.
-# See the end of the file for more details and warnings about common mistakes.
-
 [app]
 
-# (str) Title of your application
 title = Potion Time
 
-# (str) Package name
 package.name = potiontime
-
-# (str) Package domain (needed for android/ios packaging)
 package.domain = org.yamfinzz
 
-# (str) Source code where the main.py live
 source.dir = .
 
-# (list) Source files to include (leave empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas,json
 
 # (list) List of inclusions using pattern matching
@@ -49,36 +38,21 @@ icon.filename = %(source.dir)s/assets/img/icon/icon.png
 
 orientation = portrait
 
+
 services = Potiontime:service.py
 
-#
-# OSX Specific
+
 osx.python_version = 3
 
 #
 # author = © Copyright Info
 
-# Kivy version to use
 osx.kivy_version = 2.3.1
 
-#
-# Android specific
-#
-
-# (bool) Indicate if the application should be fullscreen or not
 fullscreen = 0
 
-# (string) Presplash background color (for android toolchain)
-# Supported formats are: #RRGGBB #AARRGGBB or one of the following names:
-# red, blue, green, black, white, gray, cyan, magenta, yellow, lightgray,
-# darkgray, grey, lightgrey, darkgrey, aqua, fuchsia, lime, maroon, navy,
-# olive, purple, silver, teal.
 android.presplash_color = #181818
 
-# (string) Presplash animation using Lottie format.
-# see https://lottiefiles.com/ for examples and https://airbnb.design/lottie/
-# for general documentation.
-# Lottie files can be created using various tools, like Adobe After Effect or Synfig.
 #android.presplash_lottie = "path/to/lottie/file.json"
 
 # (str) Adaptive icon of the application (used if Android API level is 26+ at runtime)

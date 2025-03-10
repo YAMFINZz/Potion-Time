@@ -1,20 +1,3 @@
-'''
-Module of Android API for plyer.notification.
-
-.. versionadded:: 1.0.0
-
-.. versionchanged:: 1.4.0
-    Fixed notifications not displaying due to missing NotificationChannel
-    required by Android Oreo 8.0+ (API 26+).
-
-.. versionchanged:: 1.4.0
-    Added simple toaster notification.
-
-.. versionchanged:: 1.4.0
-    Fixed notifications not displaying big icons properly.
-    Added option for custom big icon via `icon`.
-'''
-
 from android import python_act
 from android.runnable import run_on_ui_thread
 from jnius import autoclass, cast
@@ -26,6 +9,7 @@ AndroidString = autoclass('java.lang.String')
 Context = autoclass('android.content.Context')
 NotificationBuilder = autoclass('android.app.Notification$Builder')
 NotificationManager = autoclass('android.app.NotificationManager')
+Drawable = autoclass("{}.R$drawable".format(activity.getPackageName()))
 PendingIntent = autoclass('android.app.PendingIntent')
 Intent = autoclass('android.content.Intent')
 Toast = autoclass('android.widget.Toast')
@@ -40,17 +24,8 @@ class AndroidNotification(Notification):
     '''
 
     def __init__(self):
-        package_name = activity.getPackageName()
         self._ns = None
-        self._channel_id = package_name
-
-        pm = activity.getPackageManager()
-        info = pm.getActivityInfo(activity.getComponentName(), 0)
-        if info.icon == 0:
-            # Take the application icon instead.
-            info = pm.getApplicationInfo(package_name, 0)
-
-        self._app_icon = info.icon
+        self._channel_id = None
 
     def _get_notification_service(self):
         if not self._ns:
@@ -59,7 +34,7 @@ class AndroidNotification(Notification):
             ))
         return self._ns
 
-    def _build_notification_channel(self, name):
+    def _build_notification_channel(self, name, _id):
         '''
         Create a NotificationChannel using channel id of the application
         package name (com.xyz, org.xyz, ...) and channel name same as the
@@ -73,7 +48,9 @@ class AndroidNotification(Notification):
             return
 
         channel = autoclass('android.app.NotificationChannel')
-
+        self._channel_id = activity.getPackageName()
+        self._channel_id = self._channel_id + str(_id)
+        
         app_channel = channel(
             self._channel_id, name, NotificationManager.IMPORTANCE_DEFAULT
         )
@@ -95,7 +72,8 @@ class AndroidNotification(Notification):
             Toast.LENGTH_LONG
         ).show()
 
-    def _set_icons(self, notification, icon=None):
+    @staticmethod
+    def _set_icons(notification, icon=None):
         '''
         Set the small application icon displayed at the top panel together with
         WiFi, battery percentage and time and the big optional icon (preferably
@@ -104,10 +82,12 @@ class AndroidNotification(Notification):
 
         .. versionadded:: 1.4.0
         '''
-        app_icon = self._app_icon
+
+        app_icon = Drawable.icon
         notification.setSmallIcon(app_icon)
 
         bitmap_icon = app_icon
+
         if icon is not None:
             bitmap_icon = BitmapFactory.decodeFile(icon)
             notification.setLargeIcon(bitmap_icon)
@@ -121,19 +101,22 @@ class AndroidNotification(Notification):
             )
             notification.setLargeIcon(bitmap_icon)
 
-    def _build_notification(self, title):
+    def _build_notification(self, title, custom_id):
         '''
         .. versionadded:: 1.4.0
         '''
         if SDK_INT < 26:
             noti = NotificationBuilder(activity)
         else:
-            self._channel = self._build_notification_channel(title)
+            self._channel = self._build_notification_channel(title, custom_id)
             noti = NotificationBuilder(activity, self._channel_id)
         return noti
 
     @staticmethod
     def _set_open_behavior(notification):
+    
+        #Service = autoclass('org.kivy.your_app_name.YourServicenName').mService
+        #Service.stopForeground(True)
         '''
         Open the source application when user opens the notification.
 
@@ -151,22 +134,24 @@ class AndroidNotification(Notification):
 
         # get our application Activity
         pending_intent = PendingIntent.getActivity(
-            app_context, 0, notification_intent, 0
-        )
+            app_context, 0, notification_intent, 0)
 
         notification.setContentIntent(pending_intent)
         notification.setAutoCancel(True)
+        
+        
 
-    def _open_notification(self, notification):
+    def _open_notification(self, notification, _id):
         if SDK_INT >= 16:
             notification = notification.build()
         else:
             notification = notification.getNotification()
 
-        self._get_notification_service().notify(0, notification)
+        self._get_notification_service().notify(_id, notification)
 
     def _notify(self, **kwargs):
         noti = None
+        chan = kwargs.get('chan')
         message = kwargs.get('message').encode('utf-8')
         ticker = kwargs.get('ticker').encode('utf-8')
         title = AndroidString(
@@ -179,7 +164,7 @@ class AndroidNotification(Notification):
             self._toast(message)
             return
         else:
-            noti = self._build_notification(title)
+            noti = self._build_notification(title, chan)
 
         # set basic properties for notification
         noti.setContentTitle(title)
@@ -191,7 +176,7 @@ class AndroidNotification(Notification):
         self._set_open_behavior(noti)
 
         # launch
-        self._open_notification(noti)
+        self._open_notification(noti, chan)
 
 
 def instance():

@@ -16,8 +16,8 @@ __all__ = (
 __version__ = '2.1.0'
 
 
-from plyer import facades
-from plyer.utils import Proxy
+import facades
+from utils import Proxy
 
 #: Accelerometer proxy to :class:`plyer.facades.Accelerometer`
 accelerometer = Proxy('accelerometer', facades.Accelerometer)

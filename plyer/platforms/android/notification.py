@@ -115,13 +115,8 @@ class AndroidNotification(Notification):
     @staticmethod
     def _set_open_behavior(notification):
     
-        Service = autoclass('org.yamfinzz.potiontime.ServicePotiontime').mService
-        Service.stopForeground(True)
-        '''
-        Open the source application when user opens the notification.
-
-        .. versionadded:: 1.4.0
-        '''
+        #Service = autoclass('org.yamfinzz.potiontime.ServicePotiontime').mService
+        #Service.stopForeground(True)
 
         # create Intent that navigates back to the application
         app_context = activity.getApplication().getApplicationContext()

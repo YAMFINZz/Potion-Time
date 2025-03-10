@@ -10,7 +10,7 @@ def isMessageReady() -> bool:
 
 def sendMessage():
     from plyer import notification
-    notification.notify(chan = 1,
+    notification.notify(chan = 0,
                         title = 'Potion TIME!!!',
                         message = '🤍Time to use your Potion!🤍'
                         )

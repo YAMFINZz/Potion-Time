@@ -49,7 +49,7 @@ icon.filename = %(source.dir)s/assets/img/icon/icon.png
 
 orientation = portrait
 
-services = Potiontime:service.py:foreground
+services = Potiontime:service.py
 
 #
 # OSX Specific
@@ -87,7 +87,7 @@ android.presplash_color = #181818
 
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions.html for all the supported syntaxes and properties)
-android.permissions = WRITE_EXTERNAL_STORANGE, READ_EXTERNAL_STORANGE, POST_NOTIFICATIONS, FOREGROUND_SERVICE, BROADCAST_STICKY
+android.permissions = WRITE_EXTERNAL_STORANGE, READ_EXTERNAL_STORANGE, POST_NOTIFICATIONS
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
@@ -96,7 +96,7 @@ android.permissions = WRITE_EXTERNAL_STORANGE, READ_EXTERNAL_STORANGE, POST_NOTI
 android.api = 35
 
 # (int) Minimum API your APK / AAB will support.
-android.minapi = 28
+android.minapi = 34
 
 # (int) Android SDK version to use
 #android.sdk = 28
@@ -105,7 +105,7 @@ android.minapi = 28
 #android.ndk = 25b
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
-android.ndk_api = 28
+android.ndk_api = 34
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
 #android.ndk_path =

@@ -40,7 +40,7 @@ version = 1.0
 # version.regex = __version__ = ['"](.*)['"]
 # version.filename = %(source.dir)s/main.py
 
-requirements = python3,kivy,pyjnius==1.6.1,pillow,sdl2_ttf,android
+requirements = python3,kivy,pyjnius==1.6.1,pillow,sdl2_ttf,android-notify,android
 
 # requirements.source.kivy = ../../kivy
 
@@ -193,12 +193,12 @@ android.accept_sdk_license = True
 android.add_resources = assets/img/icon:drawable
 
 # (list) Gradle dependencies to add
-#android.gradle_dependencies = androidx.work:work-runtime:2.10.0
+android.gradle_dependencies = androidx.core:core:1.6.0, androidx.core:core-ktx:1.15.0
 
 # (bool) Enable AndroidX support. Enable when 'android.gradle_dependencies'
 # contains an 'androidx' package, or any package from Kotlin source.
 # android.enable_androidx requires android.api >= 28
-#android.enable_androidx = True
+android.enable_androidx = True
 
 # (list) add java compile options
 # this can for example be necessary when importing certain java libraries using the 'android.gradle_dependencies' option

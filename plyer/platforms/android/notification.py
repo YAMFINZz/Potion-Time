@@ -115,8 +115,8 @@ class AndroidNotification(Notification):
     @staticmethod
     def _set_open_behavior(notification):
     
-        #Service = autoclass('org.kivy.your_app_name.YourServicenName').mService
-        #Service.stopForeground(True)
+        Service = autoclass('org.yamfinzz.potiontime.ServicePotiontime').mService
+        Service.stopForeground(True)
         '''
         Open the source application when user opens the notification.
 

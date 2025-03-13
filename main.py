@@ -6,8 +6,6 @@ from kivy.lang import Builder
 
 from class_libs import *
 
-TITLE: str = "Potion TIME!"
-ICON: str = 'assets/img/icon/icon.png'
 BG_MAIN, BG_MAIN_ON_TIME = ['assets/img/bg/bg.png', 'assets/img/bg/bg_ontime.png']
 BG_HOME_UNREADY, BG_HOME_READY = ['assets/img/bg/bg_home_unready.png', 'assets/img/bg/bg_home_ready.png']
 
@@ -82,8 +80,9 @@ class Main(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setNormal()
-        Clock.schedule_interval(self.Check_Time, 1)
-
+        self.updater = Clock.schedule_interval(self.Check_Time, 1)
+        self.updater.start()
+        
     def setNormal(self) -> None:
         self.time_btn_transparent = 0
         self.time_btn_disabled = True
@@ -96,6 +95,7 @@ class Main(Screen):
             self.background_main = BG_MAIN_ON_TIME
         else:
             self.setNormal()
+        print("Updater is Running. . . . ")
     
     def Streak(self) -> None:
         self.setNormal()
@@ -109,9 +109,13 @@ class PotionTime(App):
         if platform == 'android':
             self.start_service()
 
+    def on_stop(self):
+        Main().updater.cancle()
+        print("Updater is Cancle..... ")
+        
     def build(self):
-        self.title = TITLE
-        self.icon = ICON
+        self.title = "Potion TIME!"
+        self.icon = "assets/img/icon/icon.png"
         Builder.load_file('main.kv')
         return Manager()
     

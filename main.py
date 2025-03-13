@@ -66,9 +66,7 @@ class Home(Screen):
     def setTimeInJSON(self):
         DATA.update({'set_hour': int(self.ids['Hours'].text), 'set_min': int(self.ids['Minutes'].text)})
         json.dump(DATA, open(DATA_LOCATION, 'w'))
-        
         timeCalc(DATA['set_hour'], DATA['set_min'])
-        
         self.ids['Hours'].text, self.ids['Minutes'].text = ['', '']
 
 class Main(Screen):
@@ -80,9 +78,12 @@ class Main(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.setNormal()
+
+    def on_pre_enter(self):
         self.updater = Clock.schedule_interval(self.Check_Time, 1)
-        self.updater.start()
-        
+        self.updater()
+        print('on_pre_enter fired')
+
     def setNormal(self) -> None:
         self.time_btn_transparent = 0
         self.time_btn_disabled = True
@@ -95,7 +96,7 @@ class Main(Screen):
             self.background_main = BG_MAIN_ON_TIME
         else:
             self.setNormal()
-        print("Updater is Running. . . . ")
+        print("updater running...")
     
     def Streak(self) -> None:
         self.setNormal()
@@ -110,8 +111,8 @@ class PotionTime(App):
             self.start_service()
 
     def on_stop(self):
-        Main().updater.cancle()
-        print("Updater is Cancle..... ")
+        Main().updater.cancel()
+        print('updater cancel...')
         
     def build(self):
         self.title = "Potion TIME!"
@@ -127,5 +128,4 @@ class PotionTime(App):
         service.start(mActivity, '')
         return service
 
-if __name__ == '__main__':
-    PotionTime().run()
+PotionTime().run()

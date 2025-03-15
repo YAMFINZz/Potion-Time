@@ -6,6 +6,13 @@ from jnius import autoclass
 PythonService = autoclass(u'org.kivy.android.PythonService')
 PythonService.mService.setAutoRestartService(True)
 
+def allCondition():
+    return (Condition().isTimeSet() and 
+            Condition().isTimeButtonReady() and
+            Condition().isMessageReady() and
+            Condition().timeCon(1) or 
+            Condition().timeCon(2)
+           )
 
 def sendMessage():
     from plyer import notification
@@ -17,8 +24,7 @@ def sendMessage():
 
 while True:
     print("Service Running...")
-    if (Condition().isTimeSet() and Condition().isTimeButtonReady() and Condition().isMessageReady()):
-        if Condition().timeCon(1) or Condition().timeCon(2):
-            sendMessage()
-            print("Sending Message")
+    if allCondition():
+        sendMessage()
+        print("Sending Message")
     sleep(60)

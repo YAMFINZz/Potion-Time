@@ -82,7 +82,6 @@ class Main(Screen):
     def on_pre_enter(self):
         self.updater = Clock.schedule_interval(self.Check_Time, 1)
         self.updater()
-        print('on_pre_enter fired')
 
     def setNormal(self) -> None:
         self.time_btn_transparent = 0
@@ -96,8 +95,7 @@ class Main(Screen):
             self.background_main = BG_MAIN_ON_TIME
         else:
             self.setNormal()
-        print("updater running...")
-    
+        
     def Streak(self) -> None:
         self.setNormal()
         DATA.update({'streak_day': DATA['streak_day'] + 1, 'last_time_btn_used': int(time())})
@@ -112,7 +110,6 @@ class PotionTime(App):
 
     def on_stop(self):
         Main().updater.cancel()
-        print('updater cancel...')
         
     def build(self):
         self.title = "Potion TIME!"

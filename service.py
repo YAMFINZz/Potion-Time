@@ -9,7 +9,7 @@ PythonService.mService.setAutoRestartService(True)
 
 def sendMessage():
     from plyer import notification
-    notification.notify(chan = 0, title = 'Potion TIME!!!', message = '🤍Time to use your Potion!🤍')
+    notification.notify(chan = 1, title = 'Potion TIME!!!', message = '🤍Time to use your Potion!🤍')
     DATA: dict = json.load(open(DATA_LOCATION, "r"))
     DATA.update({'last_time_msg_sent': int(time())})
     json.dump(DATA, open(DATA_LOCATION, 'w'))
@@ -18,6 +18,5 @@ def sendMessage():
 while True:
     print("Service Running...")
     if Condition().serviceMessageCondition():
-        sendMessage()
         print("Sending Message")
-    sleep(60)
+    sleep(1)

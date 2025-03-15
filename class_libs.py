@@ -73,3 +73,10 @@ class Condition():
 
     def isMessageReady(self) -> bool:
         return (self.DATA['last_time_msg_sent'] == 0) or (int(time()) - (self.DATA['last_time_msg_sent']) > 300)
+
+    def serviceMessageCondition(self) -> bool:
+            return (self.isTimeSet() and 
+                    self.isTimeButtonReady() and
+                    self.isMessageReady() and
+                    self.timeCon(1) or
+                    self.timeCon(2))

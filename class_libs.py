@@ -80,3 +80,16 @@ class Condition():
                     self.isMessageReady() and
                     self.timeCon(1) or
                     self.timeCon(2))
+    
+class serviceSystem():
+    DATA: dict = json.load(open(DATA_LOCATION, "r"))
+
+    def __init__(self):
+        if Condition().serviceMessageCondition():
+            self.sendMessage()
+
+    def sendMessage(self):
+        from plyer import notification
+        notification.notify(chan = 1, title = 'Potion TIME!!!', message = '🤍Time to use your Potion!🤍')
+        self.DATA.update({'last_time_msg_sent': int(time())})
+        json.dump(self.DATA, open(DATA_LOCATION, 'w'))

@@ -53,8 +53,8 @@ class Condition():
         return (checkHour() and checkMin())
     
     def isTimeButtonReady(self) -> bool:
-        self.DATA: dict = json.load(open(DATA_LOCATION, "r")) 
-        return (int(time()) - self.DATA['last_time_btn_used']) > 1800 #30 Min
+        self.DATA: dict = json.load(open(DATA_LOCATION, "r"))['last_time_btn_used'] 
+        return (int(time()) - self.DATA) > 1800 #30 Min
     
     def dayStreak(self) -> None:
         self.DATA: dict = json.load(open(DATA_LOCATION, "r"))
@@ -70,8 +70,8 @@ class Condition():
         else: return False
 
     def isMessageReady(self) -> bool:
-        self.DATA: dict = json.load(open(DATA_LOCATION, "r"))
-        return (int(time()) - self.DATA['last_time_msg_sent']) > 300
+        self.DATA: dict = json.load(open(DATA_LOCATION, "r"))['last_time_msg_sent']
+        return (int(time()) - self.DATA) > 300
 
     def serviceMessageCondition(self) -> bool:
         Is_Time_Set_Condition = self.isTimeSet()

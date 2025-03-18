@@ -5,15 +5,14 @@ DATA_LOCATION: str = 'assets/data/data.json'
 TIME_LIMIT_LOCATION: str = 'assets/data/time_limit.json'
 
 class timeCalc():
-    TIME_LIMIT: dict = json.load(open(TIME_LIMIT_LOCATION, "r"))
-
     def __init__(self, hour: int, min: int) -> None:    
+        self.TIME_LIMIT: dict = json.load(open(TIME_LIMIT_LOCATION, "r"))
         self.min_t, self.max_t = [[None, None], [None, None]]
         self.time = [hour, min]
         self.min_time()
         self.max_time()
         json.dump(self.TIME_LIMIT, open(TIME_LIMIT_LOCATION, 'w'))
-        del self.time       
+        del self.time
     def min_time(self) -> None:
         if self.time[1]-15 < 0:
             self.min_t[0] = self.time[0]-1
@@ -34,17 +33,13 @@ class timeCalc():
         else: self.TIME_LIMIT['1'].update({'0': self.time[0], '1': self.time[1] + 15})
         
 class Condition():
-    DATA: dict = json.load(open(DATA_LOCATION, "r"))
-    TIME_LIMIT: dict = json.load(open(TIME_LIMIT_LOCATION, "r"))
-
-    def __init__(self) -> None:
+    def timeCon(self, Condition: int) -> bool:
+        self.TIME_LIMIT: dict = json.load(open(TIME_LIMIT_LOCATION, "r"))
+        self.Condition: int = Condition
         self.min_hour: int = self.TIME_LIMIT['0']['0']
         self.max_hour: int = self.TIME_LIMIT['1']['0']
-        self.data_hour: int = self.DATA['set_hour']
+        self.data_hour: int = json.load(open(DATA_LOCATION, "r"))['set_hour']
 
-    def timeCon(self, Condition: int) -> bool:
-        self.Condition: int = Condition
-    
         def checkHour() -> bool:
                 match self.Condition:
                         case 1: return (localtime().tm_hour == self.min_hour == self.data_hour == self.max_hour)
@@ -58,21 +53,25 @@ class Condition():
         return (checkHour() and checkMin())
     
     def isTimeButtonReady(self) -> bool:
-        return (self.DATA['last_time_btn_used'] == 0) or (int(time()) - (self.DATA['last_time_btn_used']) > 1800) #30 Min
+        self.DATA: dict = json.load(open(DATA_LOCATION, "r")) 
+        return (int(time()) - self.DATA['last_time_btn_used']) > 1800 #30 Min
     
     def dayStreak(self) -> None:
+        self.DATA: dict = json.load(open(DATA_LOCATION, "r"))
         if self.DATA['streak_day'] == 28: 
             self.DATA.update({'streak_day': self.DATA['streak_day'] - 28, 'streak_month': self.DATA['streak_month'] + 1})
             json.dump(self.DATA, open(DATA_LOCATION, 'w'))
 
     def isTimeSet(self) -> bool:
+        self.DATA: dict = json.load(open(DATA_LOCATION, "r")) 
         if (self.DATA['set_hour'] != None) and (self.DATA['set_min'] != None):
             timeCalc(self.DATA['set_hour'], self.DATA['set_min'])
             return True
         else: return False
 
     def isMessageReady(self) -> bool:
-        return (self.DATA['last_time_msg_sent'] == 0) or (int(time()) - (self.DATA['last_time_msg_sent']) > 300)
+        self.DATA: dict = json.load(open(DATA_LOCATION, "r"))
+        return (int(time()) - self.DATA['last_time_msg_sent']) > 300
 
     def serviceMessageCondition(self) -> bool:
         Is_Time_Set_Condition = self.isTimeSet()
@@ -82,14 +81,13 @@ class Condition():
         return MessageReady
     
 class serviceSystem():
-    DATA: dict = json.load(open(DATA_LOCATION, "r"))
-
     def __init__(self):
         if Condition().serviceMessageCondition():
             self.sendMessage()
 
     def sendMessage(self):
         from plyer import notification
+        self.DATA: dict = json.load(open(DATA_LOCATION, "r")) 
         notification.notify(chan = 1, title = 'Potion TIME!!!', message = '🤍Time to use your Potion!🤍')
         self.DATA.update({'last_time_msg_sent': int(time())})
         json.dump(self.DATA, open(DATA_LOCATION, 'w'))

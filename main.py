@@ -18,11 +18,9 @@ class Manager(ScreenManager):
     def __init__(self):
         super().__init__()
         self.transition = NoTransition()
-        if Condition().isTimeSet():
-            timeCalc(DATA['set_hour'], DATA['set_min'])
-            self.current = 'main'
-        else:
-            self.current = 'home'
+        print(Condition().isTimeSet())
+        if Condition().isTimeSet(): self.current = 'main'
+        else: self.current = 'home'
 
 class Home(Screen):
     set_hour, set_min = [StringProperty(), StringProperty()]
@@ -102,7 +100,12 @@ class Main(Screen):
         self.setNormal()
         DATA.update({'streak_day': DATA['streak_day'] + 1, 'last_time_btn_used': int(time())})
         json.dump(DATA, open(DATA_LOCATION, 'w'))
-        Condition().dayStreak()
+        self.dayStreak()
+
+    def dayStreak(self) -> None:
+        if DATA['streak_day'] == 28: 
+            DATA.update({'streak_day': DATA['streak_day'] - 28, 'streak_month': DATA['streak_month'] + 1})
+            json.dump(DATA, open(DATA_LOCATION, 'w'))
 
 class PotionTime(App):
     def on_start(self):
@@ -111,7 +114,7 @@ class PotionTime(App):
             self.start_service()
 
     def on_stop(self):
-        Main().updater.cancel()
+        Main().on_pre_enter.updater.cancel()
         
     def build(self):
         self.title = "Potion TIME!"

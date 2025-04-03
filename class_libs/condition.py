@@ -1,5 +1,5 @@
 from time import localtime, time
-from timecalc import *
+from class_libs.timecalc import *
 import json
 
 
@@ -7,10 +7,11 @@ DATA_LOCATION: str = 'assets/data/data.json'
 
 
 def loadData(func):
+    global DATA
     def wrapper(*args):
         global DATA
         DATA = json.load(open(DATA_LOCATION, "r"))
-        func(args)
+        return func(args)
     return wrapper
 
 
@@ -33,14 +34,8 @@ class Condition():
                                 (localtime().tm_hour == self.max_hour and localtime().tm_min < self.TIME_LIMIT['1']['1']))
        
         return (checkHour() and checkMin())
-    
-        
-    def dayStreak(self) -> None:
-        if DATA['streak_day'] == 28: 
-            DATA.update({'streak_day': DATA['streak_day'] - 28, 'streak_month': DATA['streak_month'] + 1})
-            json.dump(DATA, open(DATA_LOCATION, 'w'))
 
-
+    @loadData
     def isTimeSet(self) -> bool:
         if (DATA['set_hour'] != None) and (DATA['set_min'] != None):
             timeCalc(DATA['set_hour'], DATA['set_min'])
@@ -49,15 +44,16 @@ class Condition():
             return False
     
 
+    @loadData
     def isTimeButtonReady(self) -> bool:
         return (int(time()) - DATA['last_time_btn_used']) > 1800 #30 Min
 
 
+    @loadData
     def isMessageReady(self) -> bool:
         return (int(time()) - DATA['last_time_msg_sent']) > 300
 
-
-    @loadData 
+    
     def serviceMessageCondition(self) -> bool:
         Is_Time_Set_Condition = self.isTimeSet()
         Is_Ready_Condition = self.isTimeButtonReady() and self.isMessageReady() 

@@ -18,7 +18,6 @@ class Manager(ScreenManager):
     def __init__(self):
         super().__init__()
         self.transition = NoTransition()
-        print(Condition().isTimeSet())
         if Condition().isTimeSet(): self.current = 'main'
         else: self.current = 'home'
 

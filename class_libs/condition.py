@@ -3,7 +3,7 @@ from timecalc import *
 import json
 
 
-DATA_LOCATION: str = '../assets/data/data.json'
+DATA_LOCATION: str = 'assets/data/data.json'
 
 
 def loadData(func):

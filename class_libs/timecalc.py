@@ -1,6 +1,6 @@
 import json
 
-TIME_LIMIT_LOCATION: str = '../assets/data/time_limit.json'
+TIME_LIMIT_LOCATION: str = 'assets/data/time_limit.json'
 
 class timeCalc():
     def __init__(self, hour: int, min: int) -> None:    

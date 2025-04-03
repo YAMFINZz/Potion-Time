@@ -1,12 +1,23 @@
-from time import sleep
-from class_libs import serviceSystem
+from time import sleep, time
+from class_libs.condition import *
+
+import json
+
 from jnius import autoclass
-
-
 PythonService = autoclass('org.kivy.android.PythonService')
 PythonService.mService.setAutoRestartService(True)
 
 
+
+def sendMessage():
+    from plyer import notification 
+    DATA: dict = json.load(open(DATA_LOCATION, "r"))
+    notification.notify(chan = 1, title = 'Potion TIME!!!', message = '🤍Time to use your Potion!🤍')
+    DATA.update({'last_time_msg_sent': int(time())})
+    json.dump(DATA, open(DATA_LOCATION, 'w'))
+
+
 while True:
-    serviceSystem()
+    if Condition().serviceMessageCondition():
+        sendMessage()
     sleep(60)

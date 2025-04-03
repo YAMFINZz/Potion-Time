@@ -5,10 +5,13 @@ from kivy.properties import BooleanProperty, ObjectProperty, StringProperty
 from kivy.lang import Builder
 
 from class_libs import *
+from time import time
+import json
 
 BG_MAIN, BG_MAIN_ON_TIME = ['assets/img/bg/bg.png', 'assets/img/bg/bg_ontime.png']
 BG_HOME_UNREADY, BG_HOME_READY = ['assets/img/bg/bg_home_unready.png', 'assets/img/bg/bg_home_ready.png']
 
+DATA_LOCATION: str = 'assets/data/data.json'
 DATA: dict = json.load(open(DATA_LOCATION, "r"))
 
 class Manager(ScreenManager):
@@ -51,9 +54,8 @@ class Home(Screen):
             self.eye_btn_disabled = True
     
     def setTimeOutOfBound(self, sender):
-        self.sender = sender
         try:
-            match self.sender:
+            match sender:
                 case 1:
                     if int(self.ids['Hours'].text) > 23: self.ids['Hours'].text = '23'
                     elif int(self.ids['Hours'].text) < 0: self.ids['Hours'].text = '0'
